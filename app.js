@@ -11,7 +11,8 @@ var future = require('fibers/future');
 
 var base_url = "https://www.4493.com"
 // 目标网址
-var url = 'https://www.4493.com/xingganmote/index-1.htm';
+//var url = 'https://www.4493.com/xingganmote/index-1.htm';
+var url = "https://www.4493.com/siwameitui/index-2.htm";
 var date = moment().format("YYMMDD");
 // 本地存储目录
 var uploads_dir = '/uploads/allimg/' + date;
@@ -33,11 +34,14 @@ Fiber(
             //var dede_uploads = utils.querySync("select * from dede_archives where id=21").wait();
             //console.log(dede_uploads);
             var random = utils.GetRandomNum(1000,3000);
-            var timestamps = parseInt(new Date().getTime()/1000);
-            var id = 158;
+            var time = new Date().getTime();
+            //一个月前
+            var timestamps = parseInt((time-30*24*3600*1000)/1000);
+            var id = 652;
+            var typeid = 27;
             var order = 1;
             //列表
-            var $ = utils.requestSync(url).wait();
+            var $ = utils.requestSync(url,'gb2312').wait();
             $('.piclist li a').each(function () {
                 var href = $(this).attr('href');
                 var img = $(this).children('img');
@@ -57,7 +61,7 @@ Fiber(
                 console.log("下载完成,路径： " + path);
                 console.log("开始保存archives");
                 var archives = {
-                    id:id, typeid:3,typeid2:"0",sortrank:timestamps,flag:'p,f',ismake: -1,channel:2,arcrank:0,click:random,money:0,title: title,shorttitle:"",color:"",writer:"xx",source:"晨讯网",litpic:uploads_dir+'/'+path,pubdate:timestamps,senddate:timestamps,mid:1,keywords:'',lastpost:0,scores:0,goodpost:0,badpost:0,voteid:0,notpost:0,description:mysql.escape(''),filename:'',dutyadmin:1,tackid:0,mtype:0,weight:20
+                    id:id, typeid:typeid,typeid2:"0",sortrank:timestamps,flag:'p,f',ismake: -1,channel:2,arcrank:0,click:random,money:0,title: title,shorttitle:"",color:"",writer:"拉姆",source:"晨讯网",litpic:uploads_dir+'/'+path,pubdate:timestamps,senddate:timestamps,mid:1,keywords:'',lastpost:0,scores:0,goodpost:0,badpost:0,voteid:0,notpost:0,description:'',filename:'',dutyadmin:1,tackid:0,mtype:0,weight:20
                 };
                 dede_archives(archives);
                 console.log("==================");
@@ -65,7 +69,7 @@ Fiber(
                 console.log("==================");
                 console.log("开始保存dede_arctiny");
                 var arctiny = {
-                    id:id,typeid:3,typeid2:0,arcrank:0,channel:2,senddate:timestamps,sortrank:timestamps,mid:1
+                    id:id,typeid:typeid,typeid2:0,arcrank:0,channel:2,senddate:timestamps,sortrank:timestamps,mid:1
                 };
                 dede_arctiny(arctiny);
                 console.log("==================");
@@ -77,7 +81,7 @@ Fiber(
                 var reals = [];
                 var lastof = url2.lastIndexOf("/");
                 var dbase_url = url2.substring(0, lastof+1);
-                var $2 = utils.requestSync(url2).wait();
+                var $2 = utils.requestSync(url2,'gb2312').wait();
                 var dsrc = $2(".picsboxcenter img").attr("src");
                 var countpage = $2('.picmainer h1 span#allnum').text();
 
@@ -99,7 +103,7 @@ Fiber(
                 for(var j = 2; j<countpage - 1; j++)
                 {
                     var url3 = dbase_url + j+".htm"
-                    $2 = utils.requestSync(url3).wait();
+                    $2 = utils.requestSync(url3,'gb2312').wait();
                     dsrc = $2(".picsboxcenter img").attr("src");
                     detail.push(dsrc);
                     path = new Date().getTime() + Math.floor(Math.random()*100000) + dsrc.substr(-4,4);
@@ -121,7 +125,7 @@ Fiber(
                 console.log("==================");
                 console.log("开始保存dede_addonimages");
                 var addonimages = {
-                    aid:id ,typeid:3,pagestyle:2,maxwidth:800,imgurls: imagesno,row:3,col:4,isrm:1,ddmaxwidth:200,pagepicnum:countpage,templet:'',userip:'127.0.0.1',redirecturl:'',body:''
+                    aid:id ,typeid:typeid,pagestyle:2,maxwidth:800,imgurls: imagesno,row:3,col:4,isrm:1,ddmaxwidth:200,pagepicnum:countpage,templet:'',userip:'127.0.0.1',redirecturl:'',body:''
                 }
                 dede_addonimages(addonimages);
                 console.log("保存dede_arctiny完成");
