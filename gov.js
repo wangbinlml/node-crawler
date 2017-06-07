@@ -73,7 +73,7 @@ Fiber(
                         var litpic = "";
                         if (src != undefined) {
                             console.log("下载封面： " + src);
-                            var apath = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000) + src.substr(-4, 4);
+                            var apath = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000);
                             var path = apath + src.substr(-4, 4);
                             var bbath = apath +"_145_105" + src.substr(-4, 4);
                             var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
