@@ -35,10 +35,7 @@ Fiber(
         try {
             //var dede_uploads = utils.querySync("select * from dede_archives where id=21").wait();
             //console.log(dede_uploads);
-            var random = utils.GetRandomNum(5000, 5100);
-            var time = new Date().getTime();
-            //一个月前
-            var timestamps = parseInt((time) / 1000);
+
             //最后一篇文章ID
             var arch = dede_archives_findOne();
             var id = parseInt(arch[0]['id'])+1;
@@ -56,6 +53,9 @@ Fiber(
                 var title = a.text();
                 var exists = dede_archives_find(title);
                 if (exists.length == 0) {
+                    var random = utils.GetRandomNum(5000, 5100);
+                    var time = new Date().getTime();
+                    var timestamps = parseInt((time) / 1000);
                     var date2 = span.text().replace("\\r\\n").trim();
                     if (date2 == today) {
                         var url = base_url + href;
@@ -139,7 +139,7 @@ Fiber(
                             redirecturl: "",
                             templet: "",
                             userip: "127.0.0.1"
-                        }
+                        };
                         dede_addonarticle(addonarticle);
                         console.log("保存dede_addonarticle完成");
                         console.log("==================");
