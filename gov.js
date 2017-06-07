@@ -73,10 +73,14 @@ Fiber(
                         var litpic = "";
                         if (src != undefined) {
                             console.log("下载封面： " + src);
-                            var path = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000) + src.substr(-4, 4);
+                            var apath = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000) + src.substr(-4, 4);
+                            var path = apath + src.substr(-4, 4);
+                            var bbath = apath +"_145_105" + src.substr(-4, 4);
                             var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
                             console.log(img_url)
                             utils.downloadSync(img_url, dir, path).wait();
+                            //定制尺寸缩略图
+                            utils.downloadSync(img_url, dir, bbath).wait();
                             console.log("下载完成,路径： " + path);
                             flag = flag + ",p,f";
                             litpic = uploads_dir + '/' + path;
