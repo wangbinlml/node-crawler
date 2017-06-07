@@ -38,7 +38,7 @@ Fiber(
             var random = utils.GetRandomNum(5000, 5100);
             var time = new Date().getTime();
             //一个月前
-            var timestamps = parseInt((time - 30 * 24 * 3600 * 1000) / 1000);
+            var timestamps = parseInt((time) / 1000);
             //最后一篇文章ID
             var arch = dede_archives_findOne();
             var id = parseInt(arch[0]['id'])+1;
