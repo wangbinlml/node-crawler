@@ -66,7 +66,7 @@ Fiber(
                         var $2 = utils.requestSync(url, 'utf-8').wait();
                         var content = $2('#UCAP-CONTENT').html();
                         var source = $2('.pages-date').children().first().text().replace("来源： ", "").trim();
-                        var flag = 'h,c';
+                        var flag = 'h,c,a,s';
                         var $3 = cheerio.load(content);
                         var img = $3("img");
                         var src = img.first().attr('src');
