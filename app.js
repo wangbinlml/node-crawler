@@ -109,6 +109,7 @@ Fiber(
                     var url3 = dbase_url + j+".htm"
                     $2 = utils.requestSync(url3,'gb2312').wait();
                     dsrc = $2(".picsboxcenter img").attr("src");
+                    console.log("====img====",dsrc)
                     detail.push(dsrc);
                     path = new Date().getTime() + Math.floor(Math.random()*100000) + dsrc.substr(-4,4);
                     reals.push(path);
