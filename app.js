@@ -12,7 +12,7 @@ var future = require('fibers/future');
 var base_url = "https://www.4493.com"
 // 目标网址
 //var url = 'https://www.4493.com/xingganmote/index-1.htm';
-var url = "https://www.4493.com/siwameitui/index-2.htm";
+var url = "https://www.4493.com/siwameitui/index-3.htm";
 var date = moment().format("YYMMDD");
 // 本地存储目录
 var uploads_dir = '/uploads/allimg/' + date;
@@ -60,7 +60,7 @@ Fiber(
                 };
                 console.log("=====第"+order+"条======")
                 console.log("下载封面： " + src);
-                var path = new Date().getTime() + Math.floor(Math.random()*100000) + src.substr(-4,4)
+                var path = typeid + "_" +new Date().getTime() + Math.floor(Math.random()*100000) + src.substr(-4,4)
                 utils.downloadSync(src, dir, path).wait();
                 console.log("下载完成,路径： " + path);
                 console.log("开始保存archives");
