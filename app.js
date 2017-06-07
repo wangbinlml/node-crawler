@@ -33,16 +33,20 @@ Fiber(
         try {
             //var dede_uploads = utils.querySync("select * from dede_archives where id=21").wait();
             //console.log(dede_uploads);
-            var random = utils.GetRandomNum(1000,3000);
-            var time = new Date().getTime();
-            //一个月前
-            var timestamps = parseInt((time-30*24*3600*1000)/1000);
-            var id = 652;
+            var arch = dede_archives_findOne();
+            var id = parseInt(arch[0]['id'])+1;
+            console.log("=========开始ID是======： ", id);
             var typeid = 27;
             var order = 1;
             //列表
             var $ = utils.requestSync(url,'gb2312').wait();
             $('.piclist li a').each(function () {
+
+                var random = utils.GetRandomNum(1000,3000);
+                var time = new Date().getTime();
+                //一个月前
+                var timestamps = parseInt((time-30*24*3600*1000)/1000);
+
                 var href = $(this).attr('href');
                 var img = $(this).children('img');
                 var span = $(this).children('span');
@@ -175,3 +179,7 @@ function dede_uploads(obj){
     var uploads = utils.querySync("insert into dede_uploads set ?",obj).wait();
 }
 
+function dede_archives_findOne() {
+    var archives = utils.querySync("select id from dede_archives order by id desc limit 1").wait();
+    return archives;
+}
