@@ -52,109 +52,109 @@ Fiber(
                 var href = a.attr('href');
                 var title = a.text();
                 var exists = dede_archives_find(title);
-                if(exists.length ==0) {
+                if (exists.length == 0) {
                     var date2 = span.text().replace("\\r\\n").trim();
-                    //if(date2 == today){
-                    var url = base_url + href;
-                    list.push({
-                        title: title,
-                        url: url
-                    });
-                    var $2 = utils.requestSync(url, 'utf-8').wait();
-                    var content = $2('#UCAP-CONTENT').html();
-                    var source = $2('.pages-date').children().first().text().replace("来源： ", "").trim();
-                    var flag = 'h,c';
-                    var $3 = cheerio.load(content);
-                    var img = $3("img");
-                    var src = img.first().attr('src');
-                    var litpic = "";
-                    if (src != undefined) {
-                        console.log("下载封面： " + src);
-                        var path = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000) + src.substr(-4, 4);
-                        var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
-                        console.log(img_url)
-                        utils.downloadSync(img_url, dir, path).wait();
-                        console.log("下载完成,路径： " + path);
-                        flag = flag + ",p,f";
-                        litpic = uploads_dir + '/' + path;
-                    }
-                    //替换文中的图片路径
-                    $3("img").each(function () {
-                        var src = $(this).attr('src');
-                        if (src.indexOf('http') != 1) {
+                    if (date2 == today) {
+                        var url = base_url + href;
+                        list.push({
+                            title: title,
+                            url: url
+                        });
+                        var $2 = utils.requestSync(url, 'utf-8').wait();
+                        var content = $2('#UCAP-CONTENT').html();
+                        var source = $2('.pages-date').children().first().text().replace("来源： ", "").trim();
+                        var flag = 'h,c';
+                        var $3 = cheerio.load(content);
+                        var img = $3("img");
+                        var src = img.first().attr('src');
+                        var litpic = "";
+                        if (src != undefined) {
+                            console.log("下载封面： " + src);
+                            var path = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000) + src.substr(-4, 4);
                             var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
-                            content = content.replace(src, img_url);
+                            console.log(img_url)
+                            utils.downloadSync(img_url, dir, path).wait();
+                            console.log("下载完成,路径： " + path);
+                            flag = flag + ",p,f";
+                            litpic = uploads_dir + '/' + path;
                         }
-                    });
-                    console.log("开始保存archives");
-                    var archives = {
-                        id: id,
-                        typeid: typeid,
-                        typeid2: "0",
-                        sortrank: timestamps,
-                        flag: flag,
-                        ismake: 1,
-                        channel: 1,
-                        arcrank: 0,
-                        click: random,
-                        money: 0,
-                        title: title,
-                        shorttitle: "",
-                        color: "",
-                        writer: "拉姆",
-                        source: source,
-                        litpic: litpic,
-                        pubdate: timestamps,
-                        senddate: timestamps,
-                        mid: 1,
-                        keywords: '',
-                        lastpost: 0,
-                        scores: 0,
-                        goodpost: 0,
-                        badpost: 0,
-                        voteid: 0,
-                        notpost: 0,
-                        description: '',
-                        filename: '',
-                        dutyadmin: 1,
-                        tackid: 0,
-                        mtype: 0,
-                        weight: 500
-                    };
-                    dede_archives(archives);
-                    console.log("==================");
-                    console.log("保存archives完成");
-                    console.log("开始保存dede_addonarticle");
-                    var addonarticle = {
-                        aid: id,
-                        typeid: typeid,
-                        body: content,
-                        redirecturl: "",
-                        templet: "",
-                        userip: "127.0.0.1"
+                        //替换文中的图片路径
+                        $3("img").each(function () {
+                            var src = $(this).attr('src');
+                            if (src.indexOf('http') != 1) {
+                                var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
+                                content = content.replace(src, img_url);
+                            }
+                        });
+                        console.log("开始保存archives");
+                        var archives = {
+                            id: id,
+                            typeid: typeid,
+                            typeid2: "0",
+                            sortrank: timestamps,
+                            flag: flag,
+                            ismake: 1,
+                            channel: 1,
+                            arcrank: 0,
+                            click: random,
+                            money: 0,
+                            title: title,
+                            shorttitle: "",
+                            color: "",
+                            writer: "拉姆",
+                            source: source,
+                            litpic: litpic,
+                            pubdate: timestamps,
+                            senddate: timestamps,
+                            mid: 1,
+                            keywords: '',
+                            lastpost: 0,
+                            scores: 0,
+                            goodpost: 0,
+                            badpost: 0,
+                            voteid: 0,
+                            notpost: 0,
+                            description: '',
+                            filename: '',
+                            dutyadmin: 1,
+                            tackid: 0,
+                            mtype: 0,
+                            weight: 500
+                        };
+                        dede_archives(archives);
+                        console.log("==================");
+                        console.log("保存archives完成");
+                        console.log("开始保存dede_addonarticle");
+                        var addonarticle = {
+                            aid: id,
+                            typeid: typeid,
+                            body: content,
+                            redirecturl: "",
+                            templet: "",
+                            userip: "127.0.0.1"
+                        }
+                        dede_addonarticle(addonarticle);
+                        console.log("保存dede_addonarticle完成");
+                        console.log("==================");
+                        console.log("开始保存dede_arctiny");
+                        var arctiny = {
+                            id: id,
+                            typeid: typeid,
+                            typeid2: 0,
+                            arcrank: 0,
+                            channel: 1,
+                            senddate: timestamps,
+                            sortrank: timestamps,
+                            mid: 1
+                        };
+                        dede_arctiny(arctiny);
+                        console.log("==================");
+                        console.log("保存dede_arctiny完成");
+                        console.log("==================");
+                        console.log("完成" + order + "====" + title);
+                        order++;
+                        id++;
                     }
-                    dede_addonarticle(addonarticle);
-                    console.log("保存dede_addonarticle完成");
-                    console.log("==================");
-                    console.log("开始保存dede_arctiny");
-                    var arctiny = {
-                        id: id,
-                        typeid: typeid,
-                        typeid2: 0,
-                        arcrank: 0,
-                        channel: 1,
-                        senddate: timestamps,
-                        sortrank: timestamps,
-                        mid: 1
-                    };
-                    dede_arctiny(arctiny);
-                    console.log("==================");
-                    console.log("保存dede_arctiny完成");
-                    console.log("==================");
-                    console.log("完成" + order + "====" + title);
-                    order++;
-                    id++;
-                    //}
                 } else {
                     console.log("已经存在该文章啦！！！")
                 }
@@ -166,7 +166,7 @@ Fiber(
     }
 ).run();
 //check archives
-function  dede_archives_find(title) {
+function dede_archives_find(title) {
     var archives = utils.querySync("select * from dede_archives where title= ?", title).wait();
     return archives;
 }
