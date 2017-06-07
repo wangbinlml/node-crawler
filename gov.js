@@ -155,9 +155,9 @@ Fiber(
                         console.log("保存dede_arctiny完成");
                         console.log("==================");
                         console.log("完成" + order + "====" + title);
-                        order++;
-                        id++;
                     }
+                    order++;
+                    id++;
                 } else {
                     console.log("已经存在该文章啦！！！")
                 }
