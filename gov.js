@@ -156,11 +156,11 @@ Fiber(
                         console.log("==================");
                         console.log("完成" + order + "====" + title);
                     }
-                    order++;
-                    id++;
                 } else {
                     console.log("已经存在该文章啦！！！")
                 }
+                order++;
+                id++;
             });
 
         } catch (e) {
