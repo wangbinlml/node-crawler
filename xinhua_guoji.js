@@ -43,7 +43,7 @@ Fiber(
             var arch = dede_archives_findOne();
             var id = parseInt(arch[0]['id'])+1;
             console.log("=========开始ID是======： ", id);
-            var typeid = 1;
+            var typeid = 2;
             var order = 1;
             var list = [];
             //列表
