@@ -39,7 +39,9 @@ Fiber(
             var time = new Date().getTime();
             //一个月前
             var timestamps = parseInt((time - 30 * 24 * 3600 * 1000) / 1000);
-            var id = 712;
+            //最后一篇文章ID
+            var arch = dede_archives_findOne();
+            var id = parseInt(arch[0]['id'])+1;
             var typeid = 1;
             var order = 1;
             var list = [];
@@ -168,6 +170,10 @@ Fiber(
 //check archives
 function dede_archives_find(title) {
     var archives = utils.querySync("select * from dede_archives where title= ?", title).wait();
+    return archives;
+}
+function dede_archives_findOne() {
+    var archives = utils.querySync("select id from dede_archives order by pubdate desc limit 1").wait();
     return archives;
 }
 //保存archives
