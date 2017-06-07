@@ -174,7 +174,7 @@ function dede_archives_find(title) {
     return archives;
 }
 function dede_archives_findOne() {
-    var archives = utils.querySync("select id from dede_archives order by pubdate desc limit 1").wait();
+    var archives = utils.querySync("select id from dede_archives order by id desc limit 1").wait();
     return archives;
 }
 //保存archives
