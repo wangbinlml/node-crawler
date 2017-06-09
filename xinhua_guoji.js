@@ -92,18 +92,18 @@ Fiber(
                                     console.log("下载封面： " + src);
                                     var apath = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000);
                                     var path = apath + src.substr(-4, 4);
-                                    var bbath = apath +"_145_105" + src.substr(-4, 4);
-                                    var cbath = apath +"_240_120" + src.substr(-4, 4);
-                                    var dbath = apath +"_580_326" + src.substr(-4, 4);
-                                    var ebath = apath +"_390_292" + src.substr(-4, 4);
+                                    //var bbath = apath +"_145_105" + src.substr(-4, 4);
+                                    //var cbath = apath +"_240_120" + src.substr(-4, 4);
+                                    //var dbath = apath +"_580_326" + src.substr(-4, 4);
+                                    //var ebath = apath +"_390_292" + src.substr(-4, 4);
                                     var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
                                     console.log(img_url)
                                     utils.downloadSync(img_url, dir, path).wait();
                                     //定制尺寸缩略图
-                                    utils.downloadSync(img_url, dir, bbath).wait();
-                                    utils.downloadSync(img_url, dir, cbath).wait();
-                                    utils.downloadSync(img_url, dir, dbath).wait();
-                                    utils.downloadSync(img_url, dir, ebath).wait();
+                                   // utils.downloadSync(img_url, dir, bbath).wait();
+                                   // utils.downloadSync(img_url, dir, cbath).wait();
+                                    //utils.downloadSync(img_url, dir, dbath).wait();
+                                    //utils.downloadSync(img_url, dir, ebath).wait();
                                     console.log("下载完成,路径： " + path);
                                     flag = flag + ",p,f";
                                     litpic = uploads_dir + '/' + path;
