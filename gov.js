@@ -53,7 +53,7 @@ Fiber(
                 var title = a.text();
                 var exists = dede_archives_find(title);
                 if (exists.length == 0) {
-                    var random = utils.GetRandomNum(5000, 5100);
+                    var random = utils.GetRandomNum(5110, 5120);
                     var time = new Date().getTime();
                     var timestamps = parseInt((time) / 1000);
                     var date2 = span.text().replace("\\r\\n").trim();
