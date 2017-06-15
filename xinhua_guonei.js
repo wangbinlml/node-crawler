@@ -88,7 +88,7 @@ Fiber(
                             //var img = $3("img");
                             //var src = img.first().attr('src');
                             var litpic = "";
-                            if (src != undefined) {
+                            if (src != "") {
                                 console.log("下载封面： " + src);
                                 var apath = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000);
                                 var path = apath + src.substr(-4, 4);
