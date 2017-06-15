@@ -109,13 +109,13 @@ Fiber(
                                 litpic = uploads_dir + '/' + path;
                             }
                             //替换文中的图片路径
-                            $3("img").each(function () {
+                            /*$3("img").each(function () {
                                 var src = $(this).attr('src');
                                 if (src.indexOf('http') != 1) {
                                     var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
                                     content = content.replace(src, img_url);
                                 }
-                            });
+                            });*/
                             console.log("开始保存archives");
                             var archives = {
                                 id: id,
