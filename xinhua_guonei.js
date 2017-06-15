@@ -64,7 +64,7 @@ Fiber(
                     var src = dtObj.allPics[0];
 
                     var exists = dede_archives_find(title);
-                    if (exists.length == 0 && (date2 == today)) {
+                    //if (exists.length == 0 && (date2 == today)) {
                         list.push({
                             title: title,
                             url: url2
@@ -88,7 +88,7 @@ Fiber(
                             //var img = $3("img");
                             //var src = img.first().attr('src');
                             var litpic = "";
-                            if (src != "") {
+                            /*if (src != "") {
                                 console.log("下载封面： " + src);
                                 var apath = typeid + "_" + new Date().getTime() + Math.floor(Math.random() * 100000);
                                 var path = apath + src.substr(-4, 4);
@@ -96,7 +96,7 @@ Fiber(
                                 //var cbath = apath +"_240_120" + src.substr(-4, 4);
                                 //var dbath = apath +"_580_326" + src.substr(-4, 4);
                                 //var ebath = apath +"_390_292" + src.substr(-4, 4);
-                                var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
+                                var img_url = src;
                                 console.log(img_url)
                                 utils.downloadSync(img_url, dir, path).wait();
                                 //定制尺寸缩略图
@@ -104,10 +104,10 @@ Fiber(
                                 // utils.downloadSync(img_url, dir, cbath).wait();
                                 //utils.downloadSync(img_url, dir, dbath).wait();
                                 //utils.downloadSync(img_url, dir, ebath).wait();
-                                console.log("下载完成,路径： " + path);
                                 flag = flag + ",p,f";
                                 litpic = uploads_dir + '/' + path;
-                            }
+                                console.log("下载完成,路径： " + path);
+                            }*/
                             //替换文中的图片路径
                             /*$3("img").each(function () {
                                 var src = $(this).attr('src');
@@ -183,9 +183,9 @@ Fiber(
                             console.log("==================");
                             console.log("完成" + order + "====" + title);
                         }
-                    }else {
+                    /*}else {
                         console.log("已经存在该文章啦！！！")
-                    }
+                    }*/
                     order++;
                     id++;
                 }
