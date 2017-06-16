@@ -64,7 +64,7 @@ Fiber(
                     var src = dtObj.allPics[0];
 
                     var exists = dede_archives_find(title);
-                    //if (exists.length == 0 && (date2 == today)) {
+                    if (exists.length == 0 && (date2 == today)) {
                         list.push({
                             title: title,
                             url: url2
@@ -183,9 +183,9 @@ Fiber(
                             console.log("==================");
                             console.log("完成" + order + "====" + title);
                         }
-                    /*}else {
+                    }else {
                         console.log("已经存在该文章啦！！！")
-                    }*/
+                    }
                     order++;
                     id++;
                 }
