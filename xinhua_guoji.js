@@ -35,7 +35,7 @@ Fiber(
         try {
             //var dede_uploads = utils.querySync("select * from dede_archives where id=21").wait();
             //console.log(dede_uploads);
-            var random = utils.GetRandomNum(5000, 5100);
+            var random = utils.GetRandomNum(5110, 5120);
             var time = new Date().getTime();
             //一个月前
             var timestamps = parseInt((time) / 1000);
