@@ -39,7 +39,9 @@ Fiber(
             //最后一篇文章ID
             var arch = dede_archives_findOne();
             var id = parseInt(arch[0]['id'])+1;
+            var click = parseInt(arch[0]['click'])+1;
             console.log("=========开始ID是======： ", id);
+            console.log("=========开始click是======： ", click);
             var typeid = 1;
             var order = 1;
             var list = [];
@@ -109,7 +111,7 @@ Fiber(
                             ismake: 1,
                             channel: 1,
                             arcrank: 0,
-                            click: random,
+                            click: click,
                             money: 0,
                             title: title,
                             shorttitle: "",
@@ -184,7 +186,7 @@ function dede_archives_find(title) {
     return archives;
 }
 function dede_archives_findOne() {
-    var archives = utils.querySync("select id from dede_archives order by id desc limit 1").wait();
+    var archives = utils.querySync("select id,click from dede_archives order by id desc limit 1").wait();
     return archives;
 }
 //保存archives
