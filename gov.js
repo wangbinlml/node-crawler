@@ -173,6 +173,7 @@ Fiber(
                 }
                 order++;
                 id++;
+                click++;
             });
 
         } catch (e) {
