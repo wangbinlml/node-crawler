@@ -27,10 +27,8 @@
     "request": "^2.51.0"
   },
   "dependencies": {
-    "async": "^2.1.5",
-    "fibers": "^1.0.15",
     "iconv-lite": "^0.4.17",
     "moment": "^2.18.1",
-    "mysql": "^2.13.0"
+    "mysql": "^2.15.0"
   }
 }
