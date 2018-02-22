@@ -46,7 +46,7 @@ mkdirp.sync(dir);
         for (var i = 0; i < dt.length; i++) {
             var dtObj = dt[i];
             var shorttitle = dtObj.description;
-            var url2 = dtObj.url;
+            var url2 = "http://news.cctv.com/2018/02/22/ARTIcHHsnrGnGm5MFtkLmWoN180222.shtml";//dtObj.url;
             var title = dtObj.title;
             var source = "央视网";
             var date2 = dtObj.dateTime.substr(0, 10);
