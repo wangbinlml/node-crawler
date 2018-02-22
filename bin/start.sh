@@ -1,5 +1,4 @@
 #!/bin/sh
-cd ..
 node xinhua_keji.js
 node xinhua_guoji.js
 node xinhua_guonei.js
