@@ -180,7 +180,6 @@ mkdirp.sync(dir);
         console.log(e);
     }
 
-    process.exit(0);
 })();
 
 //check archives

@@ -7,16 +7,12 @@ var fs = require('fs');
 var cheerio = require('cheerio');
 var mysql = require('mysql');
 var mkdirp = require('mkdirp');
-var async = require('async');
 var moment = require('moment');
 
 var utils = require("./lib/utils");
-var Fiber = require('fibers');
-var future = require('fibers/future');
-
 var base_url = "http://www.xinhuanet.com";
 // 目标网址
-var url = "http://www.news.cn/tech/qqbb.htm";
+var url1 = "http://www.news.cn/tech/qqbb.htm";
 var date = moment().format("YYMMDD");
 var today = moment().format("YYYY-MM-DD");
 // 本地存储目录
@@ -24,41 +20,37 @@ var uploads_dir = '/uploads/allimg/' + date;
 var dir = './images' + uploads_dir;
 
 // 创建目录
-mkdirp(dir, function (err) {
-    if (err) {
-        console.log(err);
-    }
-});
-
-Fiber(
-    function () {
+mkdirp.sync(dir);
+(async () => {
         try {
-            //var dede_uploads = utils.querySync("select * from dede_archives where id=21").wait();
+            //var dede_uploads = await utils.query("select * from dede_archives where id=21");
             //console.log(dede_uploads);
-            var random = utils.GetRandomNum(5110, 5120);
+            var random = await utils.GetRandomNum(5110, 5120);
             var time = new Date().getTime();
             //一个月前
             var timestamps = parseInt((time) / 1000);
             //最后一篇文章ID
-            var arch = dede_archives_findOne();
+            var arch = await dede_archives_findOne();
             var id = parseInt(arch[0]['id'])+1;
             console.log("=========开始ID是======： ", id);
             var typeid = 8;
             var order = 1;
             var list = [];
             //列表
-            var $ = utils.requestSync(url, 'utf-8').wait();
-            $('.tabCon .con ul li').each(function () {
+            var $ = await utils.request(url1, 'utf-8');
+            var data = $('.tabCon .con ul li');
+            for(var i = 0; i<data.length;i++) {
+                var dt = data[i];
                 console.log("=====第" + order + "条======")
-                var clearfix = $(this).attr("class");
+                var clearfix = dt.attribs.class;
                 if (clearfix == "clearfix") {
-                    var a = $(this).find('h3').children('a');
-                    var span = $(this).find('div').children('span');
-                    var href = a.attr('href');
-                    var title = a.text();
-                    var date2 = span.text().trim();
+                    var a = dt.children[1].children[0];
+                    var span = dt.children[3].children[0];
+                    var href = a.attribs.href;
+                    var title = a.children[0]['data'];
+                    var date2 = span.children[0]['data'].trim();
 
-                    var exists = dede_archives_find(title);
+                    var exists = await dede_archives_find(title);
                     if (exists.length == 0) {
                         if (date2 == today) {
                             var url = href;
@@ -66,7 +58,7 @@ Fiber(
                                 title: title,
                                 url: url
                             });
-                            var $2 = utils.requestSync(url, 'utf-8').wait();
+                            var $2 = await utils.request(url, 'utf-8');
                             var plum = $('<span></span>');
                             $2('.zan-wap').replaceWith(plum);
                             $2('.p-tags').replaceWith(plum);
@@ -99,12 +91,12 @@ Fiber(
                                     //var ebath = apath +"_390_292" + src.substr(-4, 4);
                                     var img_url = url.substring(0, url.lastIndexOf("/") + 1) + src;
                                     console.log(img_url)
-                                    utils.downloadSync(img_url, dir, path).wait();
+                                    await utils.download(img_url, dir, path);
                                     //定制尺寸缩略图
-                                    // utils.downloadSync(img_url, dir, bbath).wait();
-                                    // utils.downloadSync(img_url, dir, cbath).wait();
-                                    //utils.downloadSync(img_url, dir, dbath).wait();
-                                    //utils.downloadSync(img_url, dir, ebath).wait();
+                                    // await utils.download(img_url, dir, bbath);
+                                    // await utils.download(img_url, dir, cbath);
+                                    //await utils.download(img_url, dir, dbath);
+                                    //await utils.download(img_url, dir, ebath);
                                     console.log("下载完成,路径： " + path);
                                     flag = flag + ",p,f";
                                     litpic = uploads_dir + '/' + path;
@@ -152,7 +144,7 @@ Fiber(
                                     mtype: 0,
                                     weight: 500
                                 };
-                                dede_archives(archives);
+                                await dede_archives(archives);
                                 console.log("==================");
                                 console.log("保存archives完成");
                                 console.log("开始保存dede_addonarticle");
@@ -164,7 +156,7 @@ Fiber(
                                     templet: "",
                                     userip: "127.0.0.1"
                                 }
-                                dede_addonarticle(addonarticle);
+                                await dede_addonarticle(addonarticle);
                                 console.log("保存dede_addonarticle完成");
                                 console.log("==================");
                                 console.log("开始保存dede_arctiny");
@@ -178,7 +170,7 @@ Fiber(
                                     sortrank: timestamps,
                                     mid: 1
                                 };
-                                dede_arctiny(arctiny);
+                                await dede_arctiny(arctiny);
                                 console.log("==================");
                                 console.log("保存dede_arctiny完成");
                                 console.log("==================");
@@ -191,39 +183,39 @@ Fiber(
                     order++;
                     id++;
                 }
-            });
+            }
         } catch (e) {
             console.log("Exception:", e);
         }
+        process.exit(0);
     }
-).run();
+)();
 //check archives
-function dede_archives_find(title) {
-    var archives = utils.querySync("select * from dede_archives where title= ?", title).wait();
+async function dede_archives_find(title) {
+    var archives = await utils.query("select * from dede_archives where title= ?", title);
     return archives;
 }
-function dede_archives_findOne() {
-    var archives = utils.querySync("select id from dede_archives order by id desc limit 1").wait();
+async function dede_archives_findOne() {
+    var archives = await utils.query("select id from dede_archives order by id desc limit 1");
     return archives;
 }
 //保存archives
-function dede_archives(obj) {
+async function dede_archives(obj) {
     //(typeid,typeid2,sortrank,flag,ismake,channel,arcrank,click,money,title,shorttitle,color,writer,source,litpic,pubdate,senddate,mid,keywords,lastpost,scores,goodpost,badpost,voteid,notpost,description,filename,dutyadmin,tackid,mtype,weight)
-    var archives = utils.querySync("insert into dede_archives set ?", obj).wait();
+    var archives = await utils.query("insert into dede_archives set ?", obj);
     return archives;
 }
 
 //保存dede_arctiny
-function dede_arctiny(obj) {
+async function dede_arctiny(obj) {
     //(id,typeid,typeid2,arcrank,channel,senddate,sortrank,mid) values (?,?,?,?,?,?,?,?)
-    var uploads = utils.querySync("insert into dede_arctiny set ?", obj).wait();
+    var uploads = await utils.query("insert into dede_arctiny set ?", obj);
 
 }
 
 
 //保存dede_arctiny
-function dede_addonarticle(obj) {
+async function dede_addonarticle(obj) {
     //(id,typeid,typeid2,arcrank,channel,senddate,sortrank,mid) values (?,?,?,?,?,?,?,?)
-    var uploads = utils.querySync("insert into dede_addonarticle set ?", obj).wait();
-
+    var uploads = await utils.query("insert into dede_addonarticle set ?", obj);
 }
